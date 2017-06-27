@@ -87,7 +87,7 @@ void search_free( struct search_t *search ) {
 }
 
 // Get next address to authenticate
-static struct result_t *searches_next_result( struct search_t *search ) {
+static struct result_t *find_next_result( struct search_t *search ) {
 	struct result_t *result;
 
 	result = search->results;
@@ -103,7 +103,7 @@ static struct result_t *searches_next_result( struct search_t *search ) {
 }
 
 // Get next search to authenticate
-static struct search_t *searches_next_search( void ) {
+static struct search_t *find_next_search( void ) {
 	struct search_t **searches;
 
 	searches = searches_get();
@@ -121,13 +121,13 @@ struct result_t *searches_get_auth_target( char *query, IP *addr ) {
 	struct result_t *result;
 
 	// Get next search to authenticate
-	search = searches_next_search();
+	search = find_next_search();
 	if( search == NULL ) {
 		return NULL;
 	}
 
 	// Get next result to authenticate
-	result = searches_next_result( search );
+	result = find_next_result( search );
 	if( result == NULL ) {
 		return NULL;
 	}

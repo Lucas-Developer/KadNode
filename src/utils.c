@@ -74,23 +74,13 @@ int port_random( void ) {
 }
 
 // Parse a port - treats 0 as valid port
-int port_parse( const char *pstr, int err ) {
+int port_parse( const char pstr[], int err ) {
 	int port;
-	size_t i;
 
-	port = 0;
-	for( i = 0; pstr[i] != '\0'; i++ ) {
-		if( pstr[i] < '0' || pstr[i] > '9' ) {
-			return err;
-		}
-		port *= 10;
-		port += pstr[i] - '0';
-	}
-
-	if( i == 0 || port < 0 || port > 65535 ) {
-		return err;
-	} else {
+	if( sscanf( pstr, "%d", &port ) == 1 && port >= 0 && port <= 65535 ) {
 		return port;
+	} else {
+		return err;
 	}
 }
 
